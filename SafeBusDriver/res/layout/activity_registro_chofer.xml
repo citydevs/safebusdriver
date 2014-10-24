@@ -1,0 +1,132 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/marco_fondo" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/safebus_tv_problemas_titulo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".7"
+                android:drawableLeft="@drawable/ic_launcher_chofer_logo"
+                android:gravity="center"
+                android:paddingLeft="0dp"
+                android:paddingRight="3dp"
+                android:text="@string/titulo_registro_chofer" />
+
+            <Button
+                android:id="@+id/registro_chofer_btn_aceptar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:background="@drawable/selector_btn_square"
+                android:gravity="center"
+                android:text="@string/dialogo_btn_aceptar"
+                android:textColor="@drawable/selector_tv_color_btn" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/color_safebus_rojo" />
+
+        <LinearLayout
+            android:id="@+id/safebus_ll_reporte_hecho"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/marco"
+                    android:orientation="horizontal"
+                    android:padding="5dp" >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".8"
+                        android:orientation="vertical" >
+
+                        <com.bm.safebusdriver.registro.EditTextBackEvent
+                            android:id="@+id/registro_et_placa"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginBottom="3dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight=".9"
+                            android:background="@drawable/selector_edittext"
+                            android:drawableLeft="@drawable/ic_launcher_placa"
+                            android:ems="10"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:hint="@string/placa_registro_chofer"
+                            android:inputType="text"
+                            android:maxLength="6"
+                            android:textColorHint="@android:color/darker_gray" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/marco"
+                    android:orientation="horizontal"
+                    android:padding="5dp" >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".8"
+                        android:orientation="vertical" >
+
+                        <com.bm.safebusdriver.registro.EditTextBackEvent
+                            android:id="@+id/registro_et_ruta"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginBottom="3dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight=".9"
+                            android:background="@drawable/selector_edittext"
+                            android:drawableLeft="@drawable/ic_launcher_ruta"
+                            android:ems="10"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:hint="@string/ruta_registro_chofer"
+                            android:inputType="phone"
+                            android:maxLength="3"
+                            android:textColorHint="@android:color/darker_gray" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

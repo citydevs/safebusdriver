@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SafeBus\nChofer</string>
+    <string name="app_full_name">SafeBus</string>
+    <string name="hello_world">Hello world!</string>
+
+    <!-- Paginador pagina 1 -->
+    <string name="paginas_instrucciones_titulo">En la pantalla aparecerá un mensaje en caso de que algun pasajero se sienta amenazado.</string>
+    <string name="paginas_instrucciones_texto_pag_1">Tu apoyo es primordial para hacer que la gente llegue a su destino de manera segura.</string>
+    <string name="title_activity_safe_bus_chofer_main">SafeBusChoferMainActivity</string>
+
+    <!-- Menu -->
+    <string name="main_menu_acerca_de">Acerca de</string>
+    <string name="main_menu_menu">Menu</string>
+    <string name="main_menu_registro">Registro</string>
+
+    <!-- Registro chofer -->
+    <string name="titulo_registro_chofer">Ingresa lo siguiente</string>
+    <string name="dialogo_btn_aceptar">Guardar</string>
+    <string name="placa_registro_chofer">Placa</string>
+    <string name="ruta_registro_chofer">Ruta</string>
+    <string name="ruta_registro_vacio">Debes llenar este campo</string>
+    <string name="title_activity_top_choferes">TopChoferesActivity</string>
+    
+    <string name="default_texto_top">Sin datos</string>
+    
+      <!-- Mapa -->
+    <string name="mapa_espera">¡Espera! te estamos localizando</string>
+    <string name="mapa_mi_ubicacion">Mi ubicación</string>
+
+</resources>

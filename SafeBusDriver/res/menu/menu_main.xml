@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu"
+        android:icon="@drawable/boton_menu_selector"
+        android:showAsAction="always"
+        android:title="@string/main_menu_menu">
+        <menu>
+            <item
+                android:id="@+id/menuabouth"
+                android:icon="@drawable/ic_launcher_chofer_logo"
+                android:title="@string/main_menu_acerca_de">
+            </item>
+        </menu>
+    </item>
+
+</menu>
