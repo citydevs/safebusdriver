@@ -130,18 +130,7 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 
 
 	
-	@Override
-	  public boolean onCreateOptionsMenu(Menu menu) {
-	    MenuInflater inflater = getMenuInflater();
-	    info= new Utils(SafeBusChoferMainActivity.this).getPreferenciasChofer();
-		if(info[0]!=null){
-			inflater.inflate(R.menu.menu_main_full, menu);
-		}else{
-			inflater.inflate(R.menu.menu_main, menu);
-		}
-	  this.menu=menu;
-	    return true;
-	  } 
+
 	
 	
 	
@@ -149,11 +138,18 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 	  public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	    case R.id.menuabouth:
+	    	Mensajes.mostrarAercaDe(SafeBusChoferMainActivity.this).show();
 	    	return true;
 	    case R.id.menuadd:
 	    	showDialogQuienTieneProblemas().show();
 	    	return true;
-	  
+	    case R.id.menuclose:
+	    	info[0]= null;
+	    	info[1]= null;
+	    	new Utils(SafeBusChoferMainActivity.this).setPreferenciasChofer(info);
+	    	validaBotones();
+	    	invalidateOptionsMenu();
+	    	return true;
 	    default:
 	    	return false;
 	    }
@@ -192,7 +188,7 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 					validaBotones();
 					invalidateOptionsMenu();
 					customDialog.dismiss();
-					Mensajes.simpleToast(SafeBusChoferMainActivity.this, "Informaci—n guardada", Toast.LENGTH_LONG);	
+					Mensajes.Toast(SafeBusChoferMainActivity.this, "Informaci—n guardada", Toast.LENGTH_SHORT);	
 					
 					startService(new Intent(SafeBusChoferMainActivity.this,TimerService.class));
 
@@ -266,20 +262,43 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 		
 	}
 	
+	
+	
 	@Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
+	  public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    info= new Utils(SafeBusChoferMainActivity.this).getPreferenciasChofer();
+		if(info[0]!=null){
+			inflater.inflate(R.menu.menu_main_cerrar, menu);
+		}else{
+			inflater.inflate(R.menu.menu_main_full, menu);
+		}
+	  this.menu=menu;
+	    return true;
+	  } 
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
 
         menu.clear(); 
         MenuInflater inflater = getMenuInflater();
 	    info= new Utils(SafeBusChoferMainActivity.this).getPreferenciasChofer();
 		if(info[0]!=null){
-			inflater.inflate(R.menu.menu_main_full, menu);
+			inflater.inflate(R.menu.menu_main_cerrar, menu);
 		}else{
-			inflater.inflate(R.menu.menu_main, menu);
+			inflater.inflate(R.menu.menu_main_full, menu);
 		}
 	  this.menu=menu;
         return super.onPrepareOptionsMenu(menu);
     }
+
+	@Override
+	protected void onResume() {
+		validaBotones();
+		super.onResume();
+	}
+	
+	
 	
 	
 }

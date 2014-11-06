@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bm.safebusdriver.R;
 import com.mikesaurio.mensajesydialogos.Mensajes;
 
 public class EditTextBackEvent extends EditText {
@@ -46,7 +47,7 @@ public class EditTextBackEvent extends EditText {
 			} else {
 				countStart += 1;
 				if (countTimer) {
-					Mensajes.simpleToast(context, "Presiona una vez m‡s para salir", Toast.LENGTH_SHORT);
+					Mensajes.Toast((Activity)context, getResources().getString(R.string.back_salir), Toast.LENGTH_SHORT);
 					countTimer = false;
 					handler_time.postDelayed(runnable, 10000);
 				}

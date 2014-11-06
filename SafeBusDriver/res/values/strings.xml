@@ -14,6 +14,7 @@
     <string name="main_menu_acerca_de">Acerca de</string>
     <string name="main_menu_menu">Menu</string>
     <string name="main_menu_registro">Registro</string>
+     <string name="main_menu_cerrar">Cerrar</string>
 
     <!-- Registro chofer -->
     <string name="titulo_registro_chofer">Ingresa lo siguiente</string>
@@ -22,11 +23,11 @@
     <string name="ruta_registro_chofer">Ruta</string>
     <string name="ruta_registro_vacio">Debes llenar este campo</string>
     <string name="title_activity_top_choferes">TopChoferesActivity</string>
-    
     <string name="default_texto_top">Sin datos</string>
-    
-      <!-- Mapa -->
+
+    <!-- Mapa -->
     <string name="mapa_espera">¡Espera! te estamos localizando</string>
     <string name="mapa_mi_ubicacion">Mi ubicación</string>
+    <string name="back_salir">Presiona una vez más para salir</string>
 
 </resources>

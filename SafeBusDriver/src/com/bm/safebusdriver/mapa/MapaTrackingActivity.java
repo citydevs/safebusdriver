@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bm.safebusdriver.R;
+import com.bm.safebusdriver.SafeBusChoferMainActivity;
 import com.bm.safebusdriver.mapa.bean.MapaBean;
 import com.bm.safebusdriver.utils.Utils;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -50,6 +51,7 @@ public class MapaTrackingActivity extends Activity {
 	private String id_ubicacion= null;
 	private ArrayList<String> pointsLat;
 	private ArrayList<String> pointsLon;
+	private  String[] info;
 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
@@ -331,13 +333,17 @@ protected void onResume() {
 
  
  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.menu_main, menu);
-  this.menu=menu;
-    return true;
-  } 
-
+ public boolean onCreateOptionsMenu(Menu menu) {
+   MenuInflater inflater = getMenuInflater();
+   info= new Utils(MapaTrackingActivity.this).getPreferenciasChofer();
+	if(info[0]!=null){
+		inflater.inflate(R.menu.menu_main_cerrar, menu);
+	}else{
+		inflater.inflate(R.menu.menu_main_full, menu);
+	}
+ this.menu=menu;
+   return true;
+ } 
 
 
 
@@ -348,8 +354,15 @@ protected void onResume() {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
     case R.id.menuabouth:
+    	Mensajes.mostrarAercaDe(MapaTrackingActivity.this).show();
     	return true;
-  
+
+    case R.id.menuclose:
+    	info[0]= null;
+    	info[1]= null;
+    	new Utils(MapaTrackingActivity.this).setPreferenciasChofer(info);
+    	finish();
+    	return true;
     default:
     	return false;
     }
