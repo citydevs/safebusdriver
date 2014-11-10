@@ -41,6 +41,7 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 	String[] info;
 	private EditTextBackEvent et_placa;
 	private EditTextBackEvent et_ruta;
+	private EditTextBackEvent et_nombre;
 	
 
 	@Override
@@ -105,7 +106,7 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 
 			break;
 		case R.id.safebuschofer_btn_registra:
-			showDialogQuienTieneProblemas().show();
+			showDialogRegistroBus().show();
 			
 			break;
 		case R.id.safebuschofer_btn_top5:
@@ -141,7 +142,7 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 	    	Mensajes.mostrarAercaDe(SafeBusChoferMainActivity.this).show();
 	    	return true;
 	    case R.id.menuadd:
-	    	showDialogQuienTieneProblemas().show();
+	    	showDialogRegistroBus().show();
 	    	return true;
 	    case R.id.menuclose:
 	    	info[0]= null;
@@ -161,11 +162,11 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 	 * Dialogo para asegurar que quieres salir de la app
 	 * 
 	 * @param Activity
-	 *            (actividad que llama al di‡logo)
+	 *            (actividad que llama al diï¿½logo)
 	 * @return Dialog (regresa el dialogo creado)
 	 **/
 
-	public Dialog showDialogQuienTieneProblemas() {
+	public Dialog showDialogRegistroBus() {
 
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -175,6 +176,7 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 
 		 et_placa =(EditTextBackEvent)view.findViewById(R.id.registro_et_placa);
 		 et_ruta =(EditTextBackEvent)view.findViewById(R.id.registro_et_ruta);
+		 et_nombre =(EditTextBackEvent)view.findViewById(R.id.registro_et_nombre);
 		 llenarCampos();
 		 
 		 Button btn_aceptar = (Button)view.findViewById(R.id.registro_chofer_btn_aceptar);
@@ -183,15 +185,15 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 			@Override
 			public void onClick(View v) {
 				if(validaEditText()){
-
-					new Utils(SafeBusChoferMainActivity.this).setPreferenciasChofer(new String[]{et_placa.getText().toString(),et_ruta.getText().toString()});
-					validaBotones();
-					invalidateOptionsMenu();
-					customDialog.dismiss();
-					Mensajes.Toast(SafeBusChoferMainActivity.this, "Informaci—n guardada", Toast.LENGTH_SHORT);	
-					
-					startService(new Intent(SafeBusChoferMainActivity.this,TimerService.class));
-
+					new Utils(SafeBusChoferMainActivity.this).setPreferenciasChofer(new String[]{et_placa.getText().toString(),et_ruta.getText().toString(),
+							et_nombre.getText().toString()});
+					if(Utils.doHttpPostAltaChofer(SafeBusChoferMainActivity.this,"https://cryptic-peak-2139.herokuapp.com/buses")){
+							validaBotones();
+							invalidateOptionsMenu();
+							customDialog.dismiss();
+							Mensajes.Toast(SafeBusChoferMainActivity.this, "InformaciÃ³n guardada", Toast.LENGTH_SHORT);	
+							startService(new Intent(SafeBusChoferMainActivity.this,TimerService.class));
+					}
 				}
 			}
 
@@ -223,6 +225,9 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 			return false;
 		}else if(et_ruta.getText().toString().equals("")){
 			et_ruta.setError(getResources().getString(R.string.ruta_registro_vacio));
+			return false;
+		}else if(et_nombre.getText().toString().equals("")){
+			et_nombre.setError(getResources().getString(R.string.ruta_registro_vacio));
 			return false;
 		}
 		return true;
@@ -258,6 +263,7 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 		if(info[0]!=null){
 			et_placa.setText(info[0]);
 			et_ruta.setText(info[1]);
+			et_nombre.setText(info[2]);
 		}
 		
 	}

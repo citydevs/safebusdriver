@@ -19,7 +19,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".7"
-                android:drawableLeft="@drawable/ic_launcher_chofer_logo"
                 android:gravity="center"
                 android:paddingLeft="0dp"
                 android:paddingRight="3dp"
@@ -60,6 +59,42 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/marco"
+                    android:orientation="horizontal"
+                    android:padding="5dp" >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".8"
+                        android:orientation="vertical" >
+
+                        <com.bm.safebusdriver.registro.EditTextBackEvent
+                            android:id="@+id/registro_et_nombre"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginBottom="3dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight=".9"
+                            android:background="@drawable/selector_edittext"
+                            android:digits="qwertyuiopñlkjhgfdsazxcvbnmABCDEFGHIJKLMNÑOPQRSTUVWXYZ "
+                            android:drawableLeft="@drawable/ic_launcher_chofer_logo"
+                            android:ems="10"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:hint="@string/nombre_registro_chofer"
+                            android:inputType="text"
+                            android:maxLength="25"
+                            android:textColorHint="@android:color/darker_gray" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/marco"
                     android:orientation="horizontal"
                     android:padding="5dp" >
@@ -80,12 +115,13 @@
                             android:layout_marginTop="5dp"
                             android:layout_weight=".9"
                             android:background="@drawable/selector_edittext"
+                            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
                             android:drawableLeft="@drawable/ic_launcher_placa"
                             android:ems="10"
                             android:focusable="true"
                             android:focusableInTouchMode="true"
                             android:hint="@string/placa_registro_chofer"
-                            android:inputType="text"
+                            android:inputType="textCapCharacters"
                             android:maxLength="6"
                             android:textColorHint="@android:color/darker_gray" />
                     </LinearLayout>
@@ -115,6 +151,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_weight=".9"
                             android:background="@drawable/selector_edittext"
+                            android:digits="0123456789"
                             android:drawableLeft="@drawable/ic_launcher_ruta"
                             android:ems="10"
                             android:focusable="true"

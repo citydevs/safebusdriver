@@ -75,8 +75,7 @@ protected void onCreate(Bundle savedInstanceState) {
 	//cargamos el mapa
 	setUpMapIfNeeded();
 	
-	//iniciamos el servicio de localizacion
-	ServicioLocalizacion.activity = MapaTrackingActivity.this;
+	//iniciamos el servicio de localizacio
 	startService(new Intent(MapaTrackingActivity.this,ServicioLocalizacion.class));
 	
 	ImageView	mapa_iv_back =(ImageView)findViewById(R.id.mapa_iv_back);

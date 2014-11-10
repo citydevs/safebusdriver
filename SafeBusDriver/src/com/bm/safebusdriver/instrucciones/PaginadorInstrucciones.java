@@ -1,8 +1,6 @@
 package com.bm.safebusdriver.instrucciones;
 
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -15,11 +13,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bm.safebusdriver.R;
-import com.bm.safebusdriver.SafeBusChoferMainActivity;
+import com.bm.safebusdriver.gcm.GCM;
 import com.bm.safebusdriver.instrucciones.adaptadores.FragmentPagerAdapterDialog;
 import com.bm.safebusdriver.instrucciones.adaptadores.ScreenSlidePageFragmentDialog;
-import com.bm.safebusdriver.mapa.MapaTrackingActivity;
 import com.bm.safebusdriver.utils.Utils;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 
 /**
@@ -31,6 +29,9 @@ public class PaginadorInstrucciones extends FragmentActivity  implements  OnClic
 	
 	private ViewPager pager = null;
 	private ImageView btn_siguiente;
+	//GCM
+	private GoogleCloudMessaging gcm;
+	private GCM mGCM;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -54,7 +55,7 @@ public class PaginadorInstrucciones extends FragmentActivity  implements  OnClic
 		
 		
 		btn_siguiente =(ImageView)findViewById(R.id.instrucciones_btn_siguiente); 
-		Point p = Utils.getTamanoPantalla(PaginadorInstrucciones.this); //tama–o de pantalla
+		Point p = Utils.getTamanoPantalla(PaginadorInstrucciones.this); //tamaï¿½o de pantalla
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(p.x / 2, p.y / 3);
 		btn_siguiente.setLayoutParams(lp);
 		btn_siguiente.setOnClickListener(this);
@@ -82,9 +83,12 @@ public class PaginadorInstrucciones extends FragmentActivity  implements  OnClic
 		switch (v.getId()) {
 		case R.id.instrucciones_btn_siguiente:
 				
-				new Utils(PaginadorInstrucciones.this).setPreferenciasSplash();
-				startActivity(new Intent(PaginadorInstrucciones.this,SafeBusChoferMainActivity.class));
-				finish();
+			//activar GSM 
+			 mGCM= new GCM(PaginadorInstrucciones.this);
+			  if (mGCM.checkPlayServices()) {
+		            gcm = GoogleCloudMessaging.getInstance(this);
+		            mGCM.registerInBackground(gcm);       
+		        }
 			break;
 		default:
 			break;
@@ -110,7 +114,16 @@ public class PaginadorInstrucciones extends FragmentActivity  implements  OnClic
 		}
 	}
 
-
+	// You need to do the Play Services APK check here too.
+			@Override
+			protected void onResume() {
+			    super.onResume();
+			    if(mGCM!=null)
+			    	mGCM.checkPlayServices();
+			}
+			
+			
+			
 
 
 	
