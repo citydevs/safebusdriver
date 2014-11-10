@@ -14,7 +14,7 @@
     <string name="main_menu_acerca_de">Acerca de</string>
     <string name="main_menu_menu">Menu</string>
     <string name="main_menu_registro">Registro</string>
-     <string name="main_menu_cerrar">Cerrar</string>
+     <string name="main_menu_cerrar">Cerrar sesión</string>
 
     <!-- Registro chofer -->
     <string name="titulo_registro_chofer">Ingresa lo siguiente</string>

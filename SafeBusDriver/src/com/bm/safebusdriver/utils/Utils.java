@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -62,23 +64,41 @@ public class Utils {
 	}
 	
 	public void setPreferenciasChofer(String[] info) {
-
 		SharedPreferences prefs = activity.getSharedPreferences("PreferenciasSafeBusChofer", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.putString("placa", info[0]);
 		editor.putString("ruta", info[1]);
 		editor.putString("nombre", info[2]);
+		editor.putString("fecha_sesion", info[3]);
 		editor.commit();
 	}
 
 	public  String[] getPreferenciasChofer() {
 
 		SharedPreferences prefs = activity.getSharedPreferences("PreferenciasSafeBusChofer", Context.MODE_PRIVATE);
-		String[] info = new String[3];
+		String[] info = new String[4];
 		info[0]=prefs.getString("placa", null);
 		info[1]=prefs.getString("ruta", null);
 		info[2]=prefs.getString("nombre", null);
+		info[3]=prefs.getString("fecha_sesion", "0");
 		return info;
+	}
+	
+	/**
+	 * obtener los milisegundos de una fecha
+	 * @return
+	 */
+	public static long getFechaHoy(){
+		Calendar now = Calendar.getInstance();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    	String fechaCel= now.get(Calendar.DAY_OF_MONTH)+"/"+((now.get(Calendar.MONTH))+1)+"/"+now.get(Calendar.YEAR)+
+				" "+now.get(Calendar.HOUR_OF_DAY)+":"+now.get(Calendar.MINUTE)+":"+now.get(Calendar.SECOND);
+    	try {
+			return  (formatter.parse(fechaCel)).getTime();
+		} catch (java.text.ParseException e) {
+			e.printStackTrace();
+			return 0;
+		}
 	}
 	
 	
@@ -228,5 +248,7 @@ public class Utils {
 	 		return pDialog;
 
 		}
+		
+		
 
 }

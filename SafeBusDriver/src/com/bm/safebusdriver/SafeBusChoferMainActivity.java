@@ -25,10 +25,10 @@ import android.widget.Toast;
 
 import com.bm.safebusdriver.mapa.MapaTrackingActivity;
 import com.bm.safebusdriver.registro.EditTextBackEvent;
-import com.bm.safebusdriver.service.TimerService;
 import com.bm.safebusdriver.topchoferes.TopChoferesActivity;
 import com.bm.safebusdriver.utils.Utils;
 import com.mikesaurio.mensajesydialogos.Mensajes;
+import com.mikesaurio.modulolocalizacion.ServicioLocalizacion;
 
 public class SafeBusChoferMainActivity extends Activity implements OnClickListener {
 
@@ -64,7 +64,8 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 		mActionBar.setDisplayShowCustomEnabled(true);
 		/**/
 		
-		
+		//iniciamos el servicio de localizacio
+		startService(new Intent(SafeBusChoferMainActivity.this,ServicioLocalizacion.class));
 
 		validaBotones();
 		
@@ -186,13 +187,14 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 			public void onClick(View v) {
 				if(validaEditText()){
 					new Utils(SafeBusChoferMainActivity.this).setPreferenciasChofer(new String[]{et_placa.getText().toString(),et_ruta.getText().toString(),
-							et_nombre.getText().toString()});
+							et_nombre.getText().toString(),
+							Utils.getFechaHoy()+""});
+					
 					if(Utils.doHttpPostAltaChofer(SafeBusChoferMainActivity.this,"https://cryptic-peak-2139.herokuapp.com/buses")){
 							validaBotones();
 							invalidateOptionsMenu();
 							customDialog.dismiss();
 							Mensajes.Toast(SafeBusChoferMainActivity.this, "Información guardada", Toast.LENGTH_SHORT);	
-							startService(new Intent(SafeBusChoferMainActivity.this,TimerService.class));
 					}
 				}
 			}

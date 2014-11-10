@@ -16,6 +16,8 @@ public class BootCompletedIntentReceiver extends BroadcastReceiver {
 
       Intent myIntent = new Intent(context, ServicioLocalizacion.class);
       context.startService(myIntent);
+      
+      
     
  
  }

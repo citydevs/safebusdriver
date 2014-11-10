@@ -75,8 +75,7 @@ protected void onCreate(Bundle savedInstanceState) {
 	//cargamos el mapa
 	setUpMapIfNeeded();
 	
-	//iniciamos el servicio de localizacio
-	startService(new Intent(MapaTrackingActivity.this,ServicioLocalizacion.class));
+
 	
 	ImageView	mapa_iv_back =(ImageView)findViewById(R.id.mapa_iv_back);
 	mapa_iv_back.setOnClickListener(new View.OnClickListener() {
@@ -326,7 +325,7 @@ protected void onResume() {
 	if(pDialog!=null){
     	pDialog.dismiss();
     	}
-	stopService(new Intent(MapaTrackingActivity.this,ServicioLocalizacion.class));
+	//stopService(new Intent(MapaTrackingActivity.this,ServicioLocalizacion.class));
 		super.onDestroy();
 	}
 

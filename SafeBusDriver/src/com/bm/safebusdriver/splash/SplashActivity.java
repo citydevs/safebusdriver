@@ -26,7 +26,7 @@ import com.bm.safebusdriver.utils.Utils;
 public class SplashActivity extends Activity {
 
 	private static final long SPLASH_SCREEN_DELAY = 3000; //tiempo que dura el splash
-
+	private Utils utils;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,18 +34,27 @@ public class SplashActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_splash);
 
+		utils = new Utils(SplashActivity.this);
 		
 
 		FrameLayout frame_splash = (FrameLayout) findViewById(R.id.frame_splash);
 
-		Point p = Utils.getTamanoPantalla(SplashActivity.this); //tama�o de pantalla
+		Point p = Utils.getTamanoPantalla(SplashActivity.this); //tamaño de pantalla
 		
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(p.x / 2, p.y / 3);
 		lp.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
 		frame_splash.setLayoutParams(lp);
 		
 		
-		if (new Utils(SplashActivity.this).getPreferenciasGCM()!=null) {//si ya se hacepto el tutorial
+		if (utils.getPreferenciasGCM()!=null) {//si ya se hacepto el tutorial
+			if(utils.getPreferenciasChofer()[3]!=null){//si tiene una sesion iniciada
+				long dia_guardado = Long.parseLong(utils.getPreferenciasChofer()[3]);//traemos el dia de la sesion 
+				if(dia_guardado+86400000>Utils.getFechaHoy()){
+					utils.setPreferenciasChofer(new String[]{null,null,
+							null,
+							"0"});
+				}
+			}
 			init(SafeBusChoferMainActivity.class);
 		} else {
 			init(PaginadorInstrucciones.class);
