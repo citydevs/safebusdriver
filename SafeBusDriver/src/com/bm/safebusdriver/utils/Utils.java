@@ -39,6 +39,7 @@ import android.view.Display;
 
 import com.bm.safebusdriver.R;
 import com.bm.safebusdriver.gcm.UserInfo;
+import com.bm.safebusdriver.servicio.ServicioLocalizacion;
 
 public class Utils {
 
@@ -220,6 +221,50 @@ public class Utils {
 		}
 		
 	}
+	
+	
+	public static boolean doHttpPostCoordenadasChofer(ServicioLocalizacion servicioLocalizacion,String url, double latitud, double longitud){
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy);
+		 HttpParams myParams = new BasicHttpParams();
+		    HttpConnectionParams.setConnectionTimeout(myParams, 10000);
+		    HttpConnectionParams.setSoTimeout(myParams, 10000);
+		    HttpClient httpclient = new DefaultHttpClient(myParams );
+		    try { 
+		    	
+		    	String s[]= new Utils(servicioLocalizacion).getPreferenciasChofer();
+		    	
+		    JSONObject json = new JSONObject();
+		    JSONObject manJson = new JSONObject();
+		    manJson.put("lat", latitud+"");
+		    manJson.put("lng", longitud+"");
+		    manJson.put("placa", s[0]);
+		    json.put("location",manJson);
+		    
+		        HttpPost httppost = new HttpPost(url.toString());
+		        httppost.setHeader("Content-type", "application/json");
+
+		        StringEntity se = new StringEntity(json.toString()); 
+		        se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+		        httppost.setEntity(se); 
+
+		        HttpResponse response = httpclient.execute(httppost);
+		        String temp = EntityUtils.toString(response.getEntity());
+
+		return true;
+		} catch (ClientProtocolException e) {
+		e.printStackTrace();
+		return false;
+		} catch (IOException e) {
+		e.printStackTrace();
+		return false;
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	
 	
 	
 	/**

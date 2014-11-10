@@ -28,7 +28,6 @@ import com.bm.safebusdriver.registro.EditTextBackEvent;
 import com.bm.safebusdriver.topchoferes.TopChoferesActivity;
 import com.bm.safebusdriver.utils.Utils;
 import com.mikesaurio.mensajesydialogos.Mensajes;
-import com.mikesaurio.modulolocalizacion.ServicioLocalizacion;
 
 public class SafeBusChoferMainActivity extends Activity implements OnClickListener {
 
@@ -64,8 +63,7 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 		mActionBar.setDisplayShowCustomEnabled(true);
 		/**/
 		
-		//iniciamos el servicio de localizacio
-		startService(new Intent(SafeBusChoferMainActivity.this,ServicioLocalizacion.class));
+
 
 		validaBotones();
 		

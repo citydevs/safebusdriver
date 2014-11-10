@@ -1,9 +1,9 @@
 package com.bm.safebusdriver.broadcast;
-import com.mikesaurio.modulolocalizacion.ServicioLocalizacion;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import com.bm.safebusdriver.servicio.ServicioLocalizacion;
 
  /**
   * BroadcastReceiver el cual inicia el servicio si el telefono es apagado

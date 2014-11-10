@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import com.bm.safebusdriver.R;
 import com.bm.safebusdriver.SafeBusChoferMainActivity;
 import com.bm.safebusdriver.instrucciones.PaginadorInstrucciones;
-import com.bm.safebusdriver.mapa.MapaTrackingActivity;
+import com.bm.safebusdriver.servicio.ServicioLocalizacion;
 import com.bm.safebusdriver.utils.Utils;
 
 /**
@@ -49,13 +49,19 @@ public class SplashActivity extends Activity {
 		if (utils.getPreferenciasGCM()!=null) {//si ya se hacepto el tutorial
 			if(utils.getPreferenciasChofer()[3]!=null){//si tiene una sesion iniciada
 				long dia_guardado = Long.parseLong(utils.getPreferenciasChofer()[3]);//traemos el dia de la sesion 
-				if(dia_guardado+86400000>Utils.getFechaHoy()){
+				if(dia_guardado+86400000<=Utils.getFechaHoy()){
 					utils.setPreferenciasChofer(new String[]{null,null,
 							null,
 							"0"});
 				}
 			}
+			
+			startService(new Intent(SplashActivity.this,ServicioLocalizacion.class));
+			
 			init(SafeBusChoferMainActivity.class);
+			
+			
+			
 		} else {
 			init(PaginadorInstrucciones.class);
 

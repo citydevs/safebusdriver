@@ -14,14 +14,14 @@
     <string name="main_menu_acerca_de">Acerca de</string>
     <string name="main_menu_menu">Menu</string>
     <string name="main_menu_registro">Registro</string>
-     <string name="main_menu_cerrar">Cerrar sesión</string>
+    <string name="main_menu_cerrar">Cerrar sesión</string>
 
     <!-- Registro chofer -->
     <string name="titulo_registro_chofer">Ingresa lo siguiente</string>
     <string name="dialogo_btn_aceptar">Guardar</string>
     <string name="placa_registro_chofer">Placa</string>
     <string name="ruta_registro_chofer">Ruta</string>
-        <string name="nombre_registro_chofer">Nombre chofer</string>
+    <string name="nombre_registro_chofer">Nombre chofer</string>
     <string name="ruta_registro_vacio">Debes llenar este campo</string>
     <string name="title_activity_top_choferes">TopChoferesActivity</string>
     <string name="default_texto_top">Sin datos</string>
@@ -30,7 +30,7 @@
     <string name="mapa_espera">¡Espera! te estamos localizando</string>
     <string name="mapa_mi_ubicacion">Mi ubicación</string>
     <string name="back_salir">Presiona una vez más para salir</string>
-    
-      <string name="espere">espere, por favor ......</string>
+    <string name="espere">espere, por favor ......</string>
+    <string name="servicio_de_localizacion_gps_off">Localización apagada inesperadamente</string>
 
 </resources>
