@@ -5,8 +5,12 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -20,6 +24,7 @@ public class GcmIntentService extends IntentService {
     private NotificationManager mNotificationManager;
     NotificationCompat.Builder builder;
     static final String TAG = "GCMDemo";
+    Ringtone r;
 
     public GcmIntentService() {
         super("GcmIntentService");
@@ -62,6 +67,9 @@ public class GcmIntentService extends IntentService {
                 Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
                 // Post notification of received message.
                 sendNotification("Received: " + extras.toString());
+                
+                
+                
                 Log.i(TAG, "Received: " + extras.toString());
             }
         }
@@ -81,13 +89,27 @@ public class GcmIntentService extends IntentService {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-        .setSmallIcon(R.drawable.ic_launcher)
-        .setContentTitle("GCM Notification")
+        .setSmallIcon(R.drawable.ic_launcher_logo)
+        .setContentTitle(getResources().getString(R.string.titulo_alarma))
         .setStyle(new NotificationCompat.BigTextStyle()
-        .bigText(msg))
-        .setContentText(msg);
+        .bigText(getResources().getString(R.string.big_mensaje)))
+        .setContentText(getResources().getString(R.string.mensaje_alarma));
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        
+        vibra();
+        r.stop();
+    }
+    
+    
+    public void vibra() {
+    	Vibrator v = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+    	v.vibrate(3000);
+    	Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+    	r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+    	r.play();
+    	
+
     }
 }

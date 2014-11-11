@@ -32,5 +32,10 @@
     <string name="back_salir">Presiona una vez más para salir</string>
     <string name="espere">espere, por favor ......</string>
     <string name="servicio_de_localizacion_gps_off">Localización apagada inesperadamente</string>
+    
+    <!-- notificacion -->
+    <string name="titulo_alarma">ALARMA!</string>
+     <string name="big_mensaje">SafeBus</string>
+      <string name="mensaje_alarma">Sigue el protocólo de emergencia</string>
 
 </resources>
