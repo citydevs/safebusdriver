@@ -47,7 +47,7 @@ public class ServicioLocalizacion extends Service implements Runnable {
 	public static boolean countTimer = true;
 	public static  boolean panicoActivado = false;
 	public boolean isSendMesagge= false;
-    private final int INTERVALO_LOCALIZACION =60000;
+    private final int INTERVALO_LOCALIZACION =10000;
     private final int DISTANCIA_LOCALIZACION =0;
  
   

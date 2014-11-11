@@ -89,6 +89,7 @@
                             android:inputType="text"
                             android:maxLength="25"
                             android:textColorHint="@android:color/darker_gray" />
+
                     </LinearLayout>
                 </LinearLayout>
 
@@ -139,27 +140,32 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".8"
-                        android:orientation="vertical" >
+                        android:orientation="horizontal"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp" >
 
-                        <com.bm.safebusdriver.registro.EditTextBackEvent
-                            android:id="@+id/registro_et_ruta"
+                        <ImageView
+                            android:id="@+id/imageView1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_launcher_ruta" />
+
+                        <Spinner
+                            android:id="@+id/spinner_rutas"
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginBottom="3dp"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="0dp"
                             android:layout_marginTop="5dp"
                             android:layout_weight=".9"
                             android:background="@drawable/selector_edittext"
-                            android:digits="0123456789"
-                            android:drawableLeft="@drawable/ic_launcher_ruta"
-                            android:ems="10"
+                            android:drawableLeft="@drawable/ic_launcher_ruta" 
                             android:focusable="true"
                             android:focusableInTouchMode="true"
-                            android:hint="@string/ruta_registro_chofer"
-                            android:inputType="phone"
-                            android:maxLength="3"
-                            android:textColorHint="@android:color/darker_gray" />
+                            android:hint="@string/ruta_registro_chofer"/>
+
+                       
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

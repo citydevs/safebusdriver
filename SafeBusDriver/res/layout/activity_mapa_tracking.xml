@@ -10,7 +10,6 @@
         android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout1"
         class="com.google.android.gms.maps.MapFragment"
         map:cameraTargetLat="19.432727"
         map:cameraTargetLng="-99.133179"
@@ -32,35 +31,5 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:src="@drawable/boton_gps_selector" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:orientation="vertical" 
-        android:padding="5dp"
-        android:background="@drawable/marco">
-
-        <TextView
-            android:id="@+id/mapa_tracking_tv_atras_de"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Estás a" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@color/color_safebus_rojo"/>
-
-        <TextView
-            android:id="@+id/mapa_tracking_tv_adelane_de"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Le llevas" />
-    </LinearLayout>
 
 </RelativeLayout>

@@ -20,6 +20,7 @@
         <item name="android:selectableItemBackground">@null</item>
         <item name="android:actionBarItemBackground">@null</item>
         <item name="actionBarItemBackground">@null</item>
+        <item name="android:dropDownListViewStyle">@style/MyListView</item>
     </style>
 
     <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
@@ -33,6 +34,10 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="MyListView">
+        <item name="android:listSelector">@android:color/transparent</item>
     </style>
 
 </resources>

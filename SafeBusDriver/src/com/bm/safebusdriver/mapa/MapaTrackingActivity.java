@@ -1,49 +1,51 @@
 	package com.bm.safebusdriver.mapa;
 	
 	import java.util.ArrayList;
-	
+
 	import org.json.JSONArray;
-	import org.json.JSONException;
-	import org.json.JSONObject;
-	
+import org.json.JSONException;
+import org.json.JSONObject;
+
 	import android.app.ActionBar;
-	import android.app.Activity;
-	import android.app.ProgressDialog;
-	import android.content.BroadcastReceiver;
-	import android.content.Context;
-	import android.content.Intent;
-	import android.content.IntentFilter;
-	import android.content.pm.ActivityInfo;
-	import android.os.Bundle;
-	import android.view.ContextThemeWrapper;
-	import android.view.LayoutInflater;
-	import android.view.Menu;
-	import android.view.MenuInflater;
-	import android.view.MenuItem;
-	import android.view.View;
-	import android.widget.ImageView;
-	import android.widget.TextView;
-	
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
+import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 	import com.bm.safebusdriver.R;
-	import com.bm.safebusdriver.mapa.bean.MapaBean;
-	import com.bm.safebusdriver.utils.Utils;
-	import com.google.android.gms.maps.CameraUpdateFactory;
-	import com.google.android.gms.maps.GoogleMap;
-	import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
-	import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
-	import com.google.android.gms.maps.MapFragment;
-	import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-	import com.google.android.gms.maps.model.CameraPosition;
-	import com.google.android.gms.maps.model.LatLng;
-	import com.google.android.gms.maps.model.Marker;
-	import com.google.android.gms.maps.model.MarkerOptions;
-	import com.mikesaurio.mensajesydialogos.Mensajes;
+import com.bm.safebusdriver.SafeBusChoferMainActivity;
+import com.bm.safebusdriver.mapa.bean.MapaBean;
+import com.bm.safebusdriver.servicio.ServicioLocalizacion;
+import com.bm.safebusdriver.utils.Utils;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.mikesaurio.mensajesydialogos.Mensajes;
 	
 	public class MapaTrackingActivity extends Activity {
 	    private GoogleMap map;
 	  	private ProgressDialog pDialog;
 	//	private MarkerOptions marker_;
-		private ArrayList<MapaBean>	mapaBeanArray= new ArrayList<MapaBean>();
+		private ArrayList<MapaBean>	mapaBeanArray;
 		private boolean isFirstTime=true;
 		private Menu menu;
 		private String id_ubicacion= null;
@@ -56,6 +58,9 @@
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.activity_mapa_tracking);
+		
+		
+		startService(new Intent(MapaTrackingActivity.this,ServicioLocalizacion.class));
 		
 		/*ActionBar*/
 		ActionBar mActionBar = getActionBar();
@@ -135,10 +140,10 @@
 	
 	
 	public void actualizarMapa(LatLng latLng){
+		
 		if(Utils.hasInternet(MapaTrackingActivity.this)){
-			buscarBuses();
-			
 			map.clear();
+			
 			MarkerOptions	marker_ = new MarkerOptions().position(latLng).title(getString(R.string.mapa_mi_ubicacion));
 			marker_.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_bus));
 			
@@ -156,15 +161,19 @@
 			Marker m = map.addMarker(marker_);
 			id_ubicacion=m.getId();
 			
-			
-			
-			MarkerOptions[] markers= new MarkerOptions[mapaBeanArray.size()];
-			
-			for(int i=0;i<mapaBeanArray.size();i++){
-				markers[i]=new MarkerOptions().position(mapaBeanArray.get(i).getPunto()).title(mapaBeanArray.get(i).getPlaca()+"@@"+mapaBeanArray.get(i).getRuta_id());
-				markers[i].icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_bus_verde));
-				map.addMarker(markers[i]);
+			mapaBeanArray=null;
+			mapaBeanArray= Utils.buscarBuses(MapaTrackingActivity.this);
+			if(mapaBeanArray!=null){
+				MarkerOptions[] markers= new MarkerOptions[mapaBeanArray.size()];
+				
+				for(int i=0;i<mapaBeanArray.size();i++){
+					markers[i]=new MarkerOptions().position(mapaBeanArray.get(i).getPunto()).title(mapaBeanArray.get(i).getPlaca()+"@@"+mapaBeanArray.get(i).getRuta_id());
+					markers[i].icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_bus_verde));
+					map.addMarker(markers[i]);
+				}
 			}
+			
+			
 			
 			
 			map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
@@ -219,45 +228,7 @@
 	
 	
 	
-	private void buscarBuses() {
-		mapaBeanArray.clear();
-		
-		String url= "http://cryptic-peak-2139.herokuapp.com/buses.json";
-		 final String strigJson = new  Utils(MapaTrackingActivity.this).doHttpConnection(url);
-		JSONArray jObj;
-		try {
-			jObj = new JSONArray(strigJson);
-			for (int i=0; i < jObj.length(); i++) {
-				MapaBean mapaBean = new MapaBean();
-				    JSONObject obj = jObj.getJSONObject(i);
-				    String placa = obj.getString("placa");
-				    mapaBean.setPlaca(placa);
-				    
-				    	JSONObject subObj = obj.getJSONObject("route");
-				    	String id = subObj.getString("id");
-				    	mapaBean.setRuta_id(id);
-				    	
-				    	JSONArray jArr = obj.getJSONArray("locations");
-				    //	for (int j=0; j < jArr.length(); j++) {
-				    	    	JSONObject objs = jArr.getJSONObject(jArr.length()-1);
-						    	 String Slat=   objs.getString("lat");
-						    	 String Slng=   objs.getString("lng");
-						    	 mapaBean.setPunto(new LatLng(Double.parseDouble(Slat), Double.parseDouble(Slng)));
-				    	 
-						    	 mapaBeanArray.add(mapaBean);
 	
-				    //	}
-	
-				    	
-	
-				}
-	
-	
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		
-	}
 	
 	
 	/**

@@ -1,6 +1,8 @@
 package com.bm.safebusdriver;
 
 
+import java.util.ArrayList;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,17 +21,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bm.safebusdriver.mapa.MapaTrackingActivity;
 import com.bm.safebusdriver.registro.EditTextBackEvent;
+import com.bm.safebusdriver.registro.bean.RegistroBean;
+import com.bm.safebusdriver.servicio.ServicioLocalizacion;
 import com.bm.safebusdriver.topchoferes.TopChoferesActivity;
 import com.bm.safebusdriver.utils.Utils;
 import com.mikesaurio.mensajesydialogos.Mensajes;
 
-public class SafeBusChoferMainActivity extends Activity implements OnClickListener {
+public class SafeBusChoferMainActivity extends Activity implements OnClickListener,OnItemSelectedListener {
 
 	public Button btn_encuentra;
 	public Button btn_registra;
@@ -39,8 +47,10 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 	private Point p;
 	String[] info;
 	private EditTextBackEvent et_placa;
-	private EditTextBackEvent et_ruta;
+	private Spinner et_ruta;
 	private EditTextBackEvent et_nombre;
+	private int id_ruta_seleccionada;
+	private Integer[] id_rutas;
 	
 
 	@Override
@@ -161,7 +171,7 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 	 * Dialogo para asegurar que quieres salir de la app
 	 * 
 	 * @param Activity
-	 *            (actividad que llama al di�logo)
+	 *            (actividad que llama al dialogo)
 	 * @return Dialog (regresa el dialogo creado)
 	 **/
 
@@ -173,10 +183,25 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 		builder.setView(view);
 		builder.setCancelable(true);
 
+		ArrayList<RegistroBean> arrayRutas= Utils.getRutasBuses();
+		
+		String[] rutas = new String[arrayRutas.size()];
+		 id_rutas = new Integer[arrayRutas.size()];
+		
+		for (int i = 0; i < rutas.length; i++) {
+			rutas[i]=arrayRutas.get(i).getName();
+			id_rutas[i]=arrayRutas.get(i).getId();
+		}
+		
+		
 		 et_placa =(EditTextBackEvent)view.findViewById(R.id.registro_et_placa);
-		 et_ruta =(EditTextBackEvent)view.findViewById(R.id.registro_et_ruta);
+		 et_ruta =(Spinner)view.findViewById(R.id.spinner_rutas);
 		 et_nombre =(EditTextBackEvent)view.findViewById(R.id.registro_et_nombre);
-		 llenarCampos();
+		 ArrayAdapter<String> adapter_state = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, rutas);
+				  adapter_state.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				  et_ruta.setAdapter(adapter_state);
+				  et_ruta.setOnItemSelectedListener(this);
+		
 		 
 		 Button btn_aceptar = (Button)view.findViewById(R.id.registro_chofer_btn_aceptar);
 		 btn_aceptar.setOnClickListener(new View.OnClickListener() {
@@ -184,7 +209,7 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 			@Override
 			public void onClick(View v) {
 				if(validaEditText()){
-					new Utils(SafeBusChoferMainActivity.this).setPreferenciasChofer(new String[]{et_placa.getText().toString(),et_ruta.getText().toString(),
+					new Utils(SafeBusChoferMainActivity.this).setPreferenciasChofer(new String[]{et_placa.getText().toString(), id_ruta_seleccionada+"",
 							et_nombre.getText().toString(),
 							Utils.getFechaHoy()+""});
 					
@@ -193,6 +218,8 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 							invalidateOptionsMenu();
 							customDialog.dismiss();
 							Mensajes.Toast(SafeBusChoferMainActivity.this, "Información guardada", Toast.LENGTH_SHORT);	
+							
+
 					}
 				}
 			}
@@ -200,12 +227,7 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 			
 		});
 		
-		
-		
-
-
 		customDialog = builder.create();
-		
 		customDialog.setOnShowListener(new OnShowListener() {
 
 		    @Override
@@ -222,9 +244,6 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 	public boolean validaEditText() {
 		if(et_placa.getText().toString().equals("")){
 			et_placa.setError(getResources().getString(R.string.ruta_registro_vacio));
-			return false;
-		}else if(et_ruta.getText().toString().equals("")){
-			et_ruta.setError(getResources().getString(R.string.ruta_registro_vacio));
 			return false;
 		}else if(et_nombre.getText().toString().equals("")){
 			et_nombre.setError(getResources().getString(R.string.ruta_registro_vacio));
@@ -258,15 +277,7 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 		
 	}
 	
-	public void llenarCampos() {
-		info= new Utils(SafeBusChoferMainActivity.this).getPreferenciasChofer();
-		if(info[0]!=null){
-			et_placa.setText(info[0]);
-			et_ruta.setText(info[1]);
-			et_nombre.setText(info[2]);
-		}
-		
-	}
+	
 	
 	
 	
@@ -302,6 +313,24 @@ public class SafeBusChoferMainActivity extends Activity implements OnClickListen
 	protected void onResume() {
 		validaBotones();
 		super.onResume();
+	}
+
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int position,
+			long id) {
+		et_ruta.setSelection(position);
+		id_ruta_seleccionada =id_rutas[position];
+		//ruta_seleccionada = (String) et_ruta.getSelectedItem();
+	
+		
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> parent) {
+		et_ruta.setSelection(0);
+		id_ruta_seleccionada =id_rutas[0];
+		//ruta_seleccionada = (String) et_ruta.getSelectedItem();
+		
 	}
 	
 	

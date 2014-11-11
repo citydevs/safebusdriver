@@ -56,7 +56,7 @@ public class SplashActivity extends Activity {
 				}
 			}
 			
-			startService(new Intent(SplashActivity.this,ServicioLocalizacion.class));
+
 			
 			init(SafeBusChoferMainActivity.class);
 			
